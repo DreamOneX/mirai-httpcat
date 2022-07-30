@@ -17,8 +17,13 @@
 
 package com.github.dreamonex.mirai.httpcat;
 
+import com.github.dreamonex.mirai.httpcat.config.HttpCatConfig;
+import com.github.dreamonex.mirai.httpcat.handlers.MessageHandler;
+
 import net.mamoe.mirai.console.plugin.jvm.JavaPlugin;
 import net.mamoe.mirai.console.plugin.jvm.JvmPluginDescriptionBuilder;
+import net.mamoe.mirai.event.GlobalEventChannel;
+import net.mamoe.mirai.event.events.MessageEvent;
 
 public final class HttpCatPlugin extends JavaPlugin {
     public static final HttpCatPlugin INSTANCE = new HttpCatPlugin();
@@ -32,6 +37,12 @@ public final class HttpCatPlugin extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        getLogger().info("Plugin loaded!");
+        getLogger().info("HTTP Cat loaded");
+        reloadPluginConfig(HttpCatConfig.INSTANCE);
+
+        GlobalEventChannel.INSTANCE.subscribeAlways(
+            MessageEvent.class,
+            MessageHandler::handle
+        );
     }
 }
