@@ -18,35 +18,46 @@
 package com.github.dreamonex.mirai.httpcat.handlers;
 
 import java.io.IOException;
+import java.io.InputStream;
 
 import com.github.dreamonex.mirai.httpcat.HttpCatPlugin;
 import com.github.dreamonex.mirai.httpcat.utils.ConfigManager;
-import com.github.dreamonex.mirai.httpcat.utils.HttpHelper;
 
 import net.mamoe.mirai.event.events.MessageEvent;
 import net.mamoe.mirai.message.data.Image;
 import net.mamoe.mirai.utils.ExternalResource;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 public final class MessageHandler {
     public static void handle(MessageEvent e) {
-        if (e.getMessage().toString().startsWith("http.cat/")) {
-            String url = ConfigManager.getHttpCatUrl() 
-                + e.getMessage().toString().split("/")[1];
+        if (e.getMessage().contentToString().startsWith("http.cat/")) {
+            String url = ConfigManager.getHttpCatUrl()
+                         + e.getMessage().contentToString().split("/")[1];
             new Thread() {
                 @Override
                 public void run() {
                     try {
-                        ExternalResource res = ExternalResource
-                            .create(HttpHelper.getHttpInputStream(url));
-                        Image image = e.getSubject().uploadImage(res);
-                        res.close();
-                        e.getSender().sendMessage(image);
+                        OkHttpClient client = new OkHttpClient();
+                        Request request = new Request.Builder()
+                        .url(url)
+                        .build();
+                        InputStream stream;
+                        try (Response response = client.newCall(request).execute()) {
+                            stream = response.body().byteStream();
+                            ExternalResource res = ExternalResource
+                                                   .create(stream);
+                            Image image = e.getSubject().uploadImage(res);
+                            res.close();
+                            e.getSender().sendMessage(image);
+                        }
                     } catch (IOException e) {
                         HttpCatPlugin.INSTANCE.getLogger()
-                            .error("呜呜呜，怎么连不上", e);
+                        .error("呜呜呜，怎么连不上", e);
                     }
                 }
-            }.start();
+            } .start();
         }
     }
 }
