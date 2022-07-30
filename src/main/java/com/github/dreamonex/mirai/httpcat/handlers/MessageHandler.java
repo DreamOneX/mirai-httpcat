@@ -23,7 +23,9 @@ import java.io.InputStream;
 import com.github.dreamonex.mirai.httpcat.HttpCatPlugin;
 import com.github.dreamonex.mirai.httpcat.utils.ConfigManager;
 
-import net.mamoe.mirai.event.events.MessageEvent;
+import net.mamoe.mirai.contact.Contact;
+import net.mamoe.mirai.event.events.GroupMessageEvent;
+import net.mamoe.mirai.event.events.UserMessageEvent;
 import net.mamoe.mirai.message.data.Image;
 import net.mamoe.mirai.utils.ExternalResource;
 import okhttp3.OkHttpClient;
@@ -31,10 +33,10 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 public final class MessageHandler {
-    public static void handle(MessageEvent e) {
-        if (e.getMessage().contentToString().startsWith("http.cat/")) {
+    public static void sendHttpCat(Contact target, String content) {
+        if (content.startsWith("http.cat/")) {
             String url = ConfigManager.getHttpCatUrl()
-                         + e.getMessage().contentToString().split("/")[1];
+                         + content.split("/")[1];
             new Thread() {
                 @Override
                 public void run() {
@@ -48,9 +50,9 @@ public final class MessageHandler {
                             stream = response.body().byteStream();
                             ExternalResource res = ExternalResource
                                                    .create(stream);
-                            Image image = e.getSubject().uploadImage(res);
+                            Image image = target.uploadImage(res);
                             res.close();
-                            e.getSender().sendMessage(image);
+                            target.sendMessage(image);
                         }
                     } catch (IOException e) {
                         HttpCatPlugin.INSTANCE.getLogger()
@@ -59,5 +61,15 @@ public final class MessageHandler {
                 }
             } .start();
         }
+    }
+
+    public static void handleGroupMessage(GroupMessageEvent e) {
+        String content = e.getMessage().contentToString();
+        sendHttpCat(e.getGroup(), content);
+    }
+
+    public static void handleUserMessage(UserMessageEvent e) {
+        String content = e.getMessage().contentToString();
+        sendHttpCat(e.getSender(), content);
     }
 }

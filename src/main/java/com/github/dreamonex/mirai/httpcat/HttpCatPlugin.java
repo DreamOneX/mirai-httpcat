@@ -23,16 +23,17 @@ import com.github.dreamonex.mirai.httpcat.handlers.MessageHandler;
 import net.mamoe.mirai.console.plugin.jvm.JavaPlugin;
 import net.mamoe.mirai.console.plugin.jvm.JvmPluginDescriptionBuilder;
 import net.mamoe.mirai.event.GlobalEventChannel;
-import net.mamoe.mirai.event.events.MessageEvent;
+import net.mamoe.mirai.event.events.GroupMessageEvent;
+import net.mamoe.mirai.event.events.UserMessageEvent;
 
 public final class HttpCatPlugin extends JavaPlugin {
     public static final HttpCatPlugin INSTANCE = new HttpCatPlugin();
 
     private HttpCatPlugin() {
         super(new JvmPluginDescriptionBuilder("com.github.dreamonex.mirai.httpcat", "0.1.0")
-                .name("HttpCat")
-                .author("DreamOneX")
-                .build());
+              .name("HttpCat")
+              .author("DreamOneX")
+              .build());
     }
 
     @Override
@@ -41,8 +42,12 @@ public final class HttpCatPlugin extends JavaPlugin {
         reloadPluginConfig(HttpCatConfig.INSTANCE);
 
         GlobalEventChannel.INSTANCE.subscribeAlways(
-            MessageEvent.class,
-            MessageHandler::handle
+            UserMessageEvent.class,
+            MessageHandler::handleUserMessage
+        );
+        GlobalEventChannel.INSTANCE.subscribeAlways(
+            GroupMessageEvent.class,
+            MessageHandler::handleGroupMessage
         );
     }
 }
