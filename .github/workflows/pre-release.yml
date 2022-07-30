@@ -1,0 +1,44 @@
+name: Pre release
+
+on:
+  push:
+    branches:
+      - master
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Gradle-Build
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      
+      # Setup JDK
+      - name: Setup Java JDK
+        uses: actions/setup-java@v3
+        with:
+          java-version: 17
+          distribution: 'zulu'
+          cache: 'gradle'
+      
+      # Validate Gradle Wrapper
+      - name: Gradle Wrapper Validation
+        uses: gradle/wrapper-validation-action@v1.0.3
+        
+      # Build
+      - name: Make gradlew executable
+        run: chmod +x ./gradlew
+      - name: Build with Gradle
+        run: ./gradlew buildPlugin
+
+      # Auto release
+      - name: Auto release
+        uses: "marvinpinto/action-automatic-releases@latest"
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          automatic_release_tag: latest
+          prerelease: true
+          files: |
+            build/mirai/mirai-httpcat-*.mirai2.jar
+            LICENSE
