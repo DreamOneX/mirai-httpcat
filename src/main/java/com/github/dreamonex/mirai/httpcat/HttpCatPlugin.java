@@ -20,10 +20,10 @@ package com.github.dreamonex.mirai.httpcat;
 import net.mamoe.mirai.console.plugin.jvm.JavaPlugin;
 import net.mamoe.mirai.console.plugin.jvm.JvmPluginDescriptionBuilder;
 
-public final class HttpCat extends JavaPlugin {
-    public static final HttpCat INSTANCE = new HttpCat();
+public final class HttpCatPlugin extends JavaPlugin {
+    public static final HttpCatPlugin INSTANCE = new HttpCatPlugin();
 
-    private HttpCat() {
+    private HttpCatPlugin() {
         super(new JvmPluginDescriptionBuilder("com.github.dreamonex.mirai.httpcat", "0.1.0")
                 .name("HttpCat")
                 .author("DreamOneX")
