@@ -35,7 +35,7 @@ import okhttp3.Response;
 public final class MessageHandler {
     public static void sendHttpCat(Contact target, String content) {
         if (content.startsWith("http.cat/")) {
-            if (content.split("/").length < 3) return;
+            if (content.split("/").length != 2) return;
             String url = ConfigManager.getHttpCatUrl()
                          + content.split("/")[1]
                          + ".png";
