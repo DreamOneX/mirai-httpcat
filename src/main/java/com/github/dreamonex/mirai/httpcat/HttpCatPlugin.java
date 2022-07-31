@@ -41,9 +41,11 @@ public final class HttpCatPlugin extends JavaPlugin {
     @Override
     public void onEnable() {
         getLogger().info("HTTP Cat loaded");
+        getLogger().verbose("警告，你已开启废话模式");
         reloadPluginConfig(HttpCatConfig.INSTANCE);
+        getLogger().verbose("HTTP Cat config loaded");
         CommandManager.INSTANCE.registerCommand(HttpCatCommand.INSTANCE, false);
-
+        getLogger().verbose("HTTP Cat command registered");
         GlobalEventChannel.INSTANCE.subscribeAlways(
             UserMessageEvent.class,
             MessageHandler::handleUserMessage

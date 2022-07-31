@@ -28,6 +28,7 @@ import net.mamoe.mirai.event.events.GroupMessageEvent;
 import net.mamoe.mirai.event.events.UserMessageEvent;
 import net.mamoe.mirai.message.data.Image;
 import net.mamoe.mirai.utils.ExternalResource;
+
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -39,6 +40,9 @@ public final class MessageHandler {
             String url = ConfigManager.getHttpCatUrl()
                          + content.split("/")[1]
                          + ConfigManager.getSuffixName();
+            HttpCatPlugin.INSTANCE.getLogger()
+                .debug("url:" + url);
+            
             new Thread() {
                 @Override
                 public void run() {
@@ -55,6 +59,10 @@ public final class MessageHandler {
                             Image image = target.uploadImage(res);
                             res.close();
                             target.sendMessage(image);
+                        } catch (IllegalArgumentException e) {
+                            HttpCatPlugin.INSTANCE.getLogger()
+                                .verbose("wrong url");
+                            target.sendMessage("错误的资源类型（请检查url地址）");
                         }
                     } catch (IOException e) {
                         HttpCatPlugin.INSTANCE.getLogger()
