@@ -27,7 +27,6 @@ public final class ConfigManager {
         return pluginconfig.get();
     }
 
-    @Deprecated
     public final static void setHttpCatUrl(String url) {
         Value<String> pluginconfig = HttpCatConfig.INSTANCE.HttpCatURL;
         pluginconfig.set(url);
