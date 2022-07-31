@@ -1,6 +1,17 @@
 # Mirai HTTP Cat
 
-通过发送`http.cat/status_code`获取对应的HTTP Cat **WIP**
+通过发送`http.cat/status_code`获取对应的HTTP Cat
+
+## Usage
+
+通过`http.cat/status_code`获取对应的HTTP Cat
+
+### Commands
+
+* 设置url `httpcat setBaseUrl url`  
+如，`httpcat setBaseUrl https://github.com/Itsusinn/http.cat.zh-CN/tree/master/public/images-zh_CN-png`  
+* 设置后缀名 `httpcat setSuffix`  
+如，`httpcat setSuffixName .png`  
 
 ## Thanks
 
