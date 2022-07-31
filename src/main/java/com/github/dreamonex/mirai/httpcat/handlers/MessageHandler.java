@@ -38,7 +38,7 @@ public final class MessageHandler {
             if (content.split("/").length != 2) return;
             String url = ConfigManager.getHttpCatUrl()
                          + content.split("/")[1]
-                         + ".png";
+                         + ConfigManager.getSuffixName();
             new Thread() {
                 @Override
                 public void run() {

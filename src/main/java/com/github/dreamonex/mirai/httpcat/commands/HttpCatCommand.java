@@ -38,9 +38,23 @@ public final class HttpCatCommand extends JCompositeCommand {
         }
         if (!url.startsWith("http://") && !url.startsWith("https://")) {
             context.sendMessage("非法URL");
+            return;
         }
         ConfigManager.setHttpCatUrl(url);
         context.sendMessage("已成功设置URL为" + url);
     }
 
+    @SubCommand("setSuffixName")
+    public void setSuffixName(CommandSender context, String suffix) {
+        if (suffix == null || suffix.isEmpty()) {
+            context.sendMessage("后缀名不能为空");
+            return;
+        }
+        if (!suffix.startsWith(".")) {
+            context.sendMessage("非法后缀名");
+            return;
+        }
+        ConfigManager.setSuffixName(suffix);
+        context.sendMessage("已成功设置后缀名为" + suffix);
+    }
 }

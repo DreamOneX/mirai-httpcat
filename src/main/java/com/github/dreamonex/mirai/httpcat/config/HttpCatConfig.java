@@ -23,7 +23,8 @@ import net.mamoe.mirai.console.data.java.JavaAutoSavePluginConfig;
 public final class HttpCatConfig extends JavaAutoSavePluginConfig {
     public static final HttpCatConfig INSTANCE = new HttpCatConfig();
 
-    public final Value<String> HttpCatURL = value("HttpCatURL", "https://http.cat/");
+    public final Value<String> httpCatURL = value("HttpCatURL", "https://http.cat/");
+    public final Value<String> suffixName = value("suffixName", "");
 
     private HttpCatConfig() {
         super("HttpCatConfig");

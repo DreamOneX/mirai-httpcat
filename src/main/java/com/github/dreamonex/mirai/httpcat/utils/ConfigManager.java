@@ -23,12 +23,22 @@ import net.mamoe.mirai.console.data.Value;
 
 public final class ConfigManager {
     public final static String getHttpCatUrl() {
-        Value<String> pluginconfig = HttpCatConfig.INSTANCE.HttpCatURL;
+        Value<String> pluginconfig = HttpCatConfig.INSTANCE.httpCatURL;
         return pluginconfig.get();
     }
 
     public final static void setHttpCatUrl(String url) {
-        Value<String> pluginconfig = HttpCatConfig.INSTANCE.HttpCatURL;
+        Value<String> pluginconfig = HttpCatConfig.INSTANCE.httpCatURL;
         pluginconfig.set(url);
+    }
+
+    public final static String getSuffixName() {
+        Value<String> pluginconfig = HttpCatConfig.INSTANCE.suffixName;
+        return pluginconfig.get();
+    }
+
+    public final static void setSuffixName(String suffix) {
+        Value<String> pluginconfig = HttpCatConfig.INSTANCE.suffixName;
+        pluginconfig.set(suffix);
     }
 }
