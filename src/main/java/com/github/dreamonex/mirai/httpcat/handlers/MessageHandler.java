@@ -36,7 +36,8 @@ public final class MessageHandler {
     public static void sendHttpCat(Contact target, String content) {
         if (content.startsWith("http.cat/")) {
             String url = ConfigManager.getHttpCatUrl()
-                         + content.split("/")[1];
+                         + content.split("/")[1]
+                         + ".png";
             new Thread() {
                 @Override
                 public void run() {
