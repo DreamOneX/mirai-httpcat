@@ -54,6 +54,13 @@ public final class MessageHandler {
                         InputStream stream;
                         try (Response response = client.newCall(request).execute()) {
                             stream = response.body().byteStream();
+                            if (response.code() != 404) {
+                                target.sendMessage("404 Not Found");
+                                return;
+                            } else if (response.code() != 200) {
+                                target.sendMessage("奇怪的错误，检查你的url");
+                                return;
+                            }
                             ExternalResource res = ExternalResource
                                                    .create(stream);
                             Image image = target.uploadImage(res);
