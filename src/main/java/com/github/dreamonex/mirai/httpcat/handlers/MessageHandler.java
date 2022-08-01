@@ -54,7 +54,7 @@ public final class MessageHandler {
                         InputStream stream;
                         try (Response response = client.newCall(request).execute()) {
                             stream = response.body().byteStream();
-                            if (response.code() != 404) {
+                            if (response.code() == 404) {
                                 target.sendMessage("404 Not Found");
                                 return;
                             } else if (response.code() != 200) {
