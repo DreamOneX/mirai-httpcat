@@ -8,10 +8,14 @@
 
 ### Commands
 
-* 设置url `httpcat setBaseUrl url`  
-如，`httpcat setBaseUrl https://github.com/Itsusinn/http.cat.zh-CN/tree/master/public/images-zh_CN-png`  
-* 设置后缀名 `httpcat setSuffix`  
-如，`httpcat setSuffixName .png`  
+#### httpcat setBaseUrl url
+
+设置url, 如，`httpcat setBaseUrl https://github.com/Itsusinn/http.cat.zh-CN/tree/master/public/images-zh_CN-png` 
+
+#### httpcat setSuffix
+
+设置后缀名, 如，`httpcat setSuffixName .png`
+* 使用`httpcat setSuffixName null`设置后缀名为空
 
 ## Thanks
 
