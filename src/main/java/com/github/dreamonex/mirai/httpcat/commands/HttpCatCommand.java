@@ -46,9 +46,9 @@ public final class HttpCatCommand extends JCompositeCommand {
 
     @SubCommand("setSuffixName")
     public void setSuffixName(CommandSender context, String suffix) {
-        if (suffix == null || suffix.isEmpty()) {
-            context.sendMessage("后缀名不能为空");
-            return;
+        if (suffix == "null") {
+            ConfigManager.setSuffixName("");
+            context.sendMessage("已成功设置后缀名为空")
         }
         if (!suffix.startsWith(".")) {
             context.sendMessage("非法后缀名");
